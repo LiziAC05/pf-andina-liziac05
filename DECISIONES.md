@@ -44,13 +44,13 @@ Separar ambos procesos permite gestionar las distintas frecuencias de llegada si
 
 Además, Auto Loader permite detectar y procesar archivos nuevos, incluyendo archivos que llegan de manera tardía.
 
-
+**Nota**: El Job horario se encuentra configurado, pero permanece en pausa. Su implementación permite procesar los eventos digitales de manera independiente de la cadena diaria.
 
 ## 3. Decisión 2: Uso de Managed Identities para la autenticación
 
 
 
-**Decisión:** utilizar identidades administradas para establecer la comunicación entre los servicios de Azure, evitando depender de credenciales personales o secretos incorporados directamente en el código.
+**Decisión:** El uso de identidades administradas permite establecer mecanismos de autenticación entre servicios de Azure sin incorporar credenciales directamente en los notebooks o archivos de configuración. Complementariamente, Azure Key Vault permite centralizar la gestión de los secretos requeridos por las conexiones que los utilizan.
 
 
 
@@ -99,16 +99,11 @@ Los Jobs diarios y horarios utilizan Serverless para ejecutar las tareas de los 
 **Justificación:**
 
 
+Se eligió esta modalidad para simplificar la administración de la infraestructura de cómputo y evitar la gestión manual de clústeres tradicionales.
 
-Se eligió esta modalidad para simplificar la administración de la infraestructura de cómputo y evitar tener que gestionar manualmente clústeres tradicionales para las ejecuciones.
+El aprovisionamiento del cómputo se gestiona mediante la modalidad Serverless, lo que facilita ejecutar los procesos bajo demanda. Esta decisión también permite concentrar los esfuerzos en el desarrollo y mantenimiento de los procesos de ingeniería de datos, sin administrar directamente la infraestructura subyacente.
 
-
-
-También permite utilizar recursos de procesamiento bajo demanda, evitando mantener infraestructura de cómputo encendida innecesariamente.
-
-
-
-Esta decisión resulta especialmente relevante en un entorno de aprendizaje y desarrollo donde se busca controlar el consumo de recursos.
+En un entorno de desarrollo y aprendizaje, resulta importante complementar esta decisión con el seguimiento del consumo y los costos asociados a las ejecuciones.
 
 
 
@@ -270,6 +265,8 @@ La implementación se aplicó a las cinco tablas provenientes de Azure SQL Datab
 
 - payments
 
+
+La repetición de la carga se verificó para la fecha 2026-11-22. Se comprobaron los conteos de registros de las cinco tablas para dicha fecha y la conservación de los registros correspondientes a fechas anteriores. La validación se basó en la comparación de conteos de registros, no en una comparación de hashes o identidad fila por fila.
 
 
 **Justificación:**
