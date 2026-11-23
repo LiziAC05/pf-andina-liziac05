@@ -46,7 +46,7 @@ La solución integra datos transaccionales, archivos operacionales y eventos de 
 
 ## 3. Arquitectura de la solución
 
-
+![Arquitectura de Andina Retail](evidencias/arquitectura/andina_arqui.jpg)
 
 La plataforma utiliza servicios de Microsoft Azure y Azure Databricks.
 
@@ -138,7 +138,7 @@ La solución implementa tres capas de procesamiento:
 
 ### Azure Data Factory
 
-
+Consulta las [evidencias de Azure Data Factory](evidencia.md#2-azure-data-factory).
 
 El pipeline maestro `pl_pede_andina_diario` coordina la ingesta y el procesamiento de datos mediante Databricks.
 
@@ -165,6 +165,8 @@ Se implementaron los siguientes Jobs:
 - `job-pede-andina-e4-horario`: procesamiento de clics y logs mediante Auto Loader, incluyendo la detección de archivos nuevos y tardíos.
 
 
+El Job horario `job-pede-andina-e4-horario` se encuentra configurado, pero permanece en pausa.
+
 
 ## 6. Notebooks implementados
 
@@ -185,7 +187,7 @@ Se implementaron los siguientes Jobs:
 
 ### E2 — Control de calidad de datos
 
-
+[E2: Control de calidad](evidencia.md#4-extensión-e2-control-de-calidad)
 
 Implementada en `e4_02_plata`.
 
@@ -217,7 +219,7 @@ Se realizaron dos pruebas:
 
 ### E3 — Segunda fecha de carga e idempotencia
 
-
+[E3: Idempotencia](evidencia.md#5-extensión-e3-idempotencia)
 
 Implementada en `e4_01_bronce`.
 
@@ -237,6 +239,8 @@ La prueba se realizó sobre las cinco tablas SQL: customers, products, orders, o
 
 Se verificaron los conteos de registros para distintas fechas, incluyendo la repetición de una fecha previamente cargada.
 
+
+La repetición de la carga se verificó para la fecha 2026-11-22, comprobando la consistencia de los conteos y la conservación de los registros de fechas anteriores.
 
 
 ## 8. Resultados y controles de calidad
@@ -271,16 +275,28 @@ Los resultados fueron contrastados con los controles definidos para el caso de e
 
 pf-andina-liziac05/
 ├── adf/
-│   ├── linked services/
-│   ├── datasets/
-│   ├── pipelines/
-│   └── triggers/
+│   ├── datasets-ds_pede_bronze_csv.json
+│   ├── datasets-ds_pede_sql_tabla.json
+│   ├── linkedservices-ls_pede_dbx_liziac.json
+│   ├── linkedservices-ls_pede_kv_liziac.json
+│   ├── linkedservices-ls_pede_lake_liziac.json
+│   ├── linkedservices-ls_pede_sql_liziac.json
+│   ├── pipelines-pl_pede_andina_diario.json
+│   ├── pipelines-pl_pede_ingesta.json
+│   ├── tg_pede_andina_0130.json
+│   └── triggers-tg_pede_ingesta_0130.json
+├── evidencias/
+│   ├── adf/
+│   ├── arquitectura/
+│   ├── costos/
+│   ├── databricks/
+│   ├── e2/
+│   └── e3/
 ├── notebooks/
 │   ├── e4_00_clics_logs_horario.py
 │   ├── e4_01_bronce.py
 │   ├── e4_02_plata.py
 │   └── e4_03_oro.py
-├── evidencias/
 ├── README.md
 ├── DECISIONES.md
 └── evidencia.md
