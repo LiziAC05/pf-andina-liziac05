@@ -36,12 +36,24 @@ La ejecución del pipeline maestro muestra la finalización satisfactoria de las
 
 
 
+### Ejecución y procesamiento
+
 | Archivo | Descripción |
 |---|---|
 | `evidencias/databricks/Captura de pantalla 2026-11-21 225310.png` | Evidencia de ejecución de Databricks. |
 | `evidencias/databricks/Captura de pantalla 2026-11-22 152827.png` | Evidencia de ejecución y procesamiento. |
 | `evidencias/databricks/Captura de pantalla 2026-11-22 153158.png` | Evidencia de procesamiento y resultados. |
 | `evidencias/databricks/Captura de pantalla 2026-11-22 153545.png` | Evidencia de resultados del entorno Databricks. |
+| `evidencias/databricks/ejecucion_job_andina.png` | Ejecución satisfactoria del Job diario, con las tareas Bronze, Silver y Gold completadas. |
+
+### Tablas analíticas Gold
+
+| Archivo | Descripción |
+|---|---|
+| `evidencias/databricks/tablas_gold.png` | Consulta del esquema `pede_dev.gold`, donde se identifican las ocho tablas analíticas. |
+| `evidencias/databricks/ventas_diarias.png` | Resultados de la tabla de ventas diarias. |
+| `evidencias/databricks/clientes_valor.png` | Resultados de la tabla de valor de clientes. |
+| `evidencias/databricks/productos_rotacion.png` | Resultados de la tabla de rotación de productos. |
 
 
 
@@ -61,7 +73,7 @@ La extensión E2 incorpora validaciones de calidad de datos que detienen el proc
 
 
 
-La prueba negativa utilizó un registro sintético con estado HTTP 700, fuera del rango permitido. La prueba positiva permitió completar la validación de los registros de logs.
+La prueba negativa utilizó un registro sintético con estado HTTP 700, fuera del rango permitido y provocó la interrupción esperada mediante una aserción. La prueba positiva permitió completar la validación y conservar 146.282 registros en `pede_dev.silver.logs`.
 
 
 
@@ -106,6 +118,8 @@ La validación de conteos por fecha se realizó mediante consultas en Databricks
 - La ejecución de E3 documentada en este repositorio corresponde a la tarea Bronze; la validación de idempotencia se complementa con los conteos consultados por fecha.
 
 - Los estados de los triggers y Jobs se mantienen según la configuración de seguridad y control operativo del proyecto.
+  
+- El desencadenador diario tg_pede_andina_0130 se encuentra publicado, pero detenido. El Job horario de Databricks permanece en pausa.
 
 
 
