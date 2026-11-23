@@ -1,8 +1,8 @@
-\# Decisiones técnicas — Proyecto Andina Retail
+# Decisiones técnicas — Proyecto Andina Retail
 
 
 
-\## 1. Introducción
+## 1. Introducción
 
 
 
@@ -14,23 +14,23 @@ Las decisiones consideran los requerimientos del caso de estudio, la arquitectur
 
 
 
-\## 2. Decisión 1: Separación de cargas diarias y horarias
+## 2. Decisión 1: Separación de cargas diarias y horarias
 
 
 
-\*\*Decisión:\*\* implementar dos mecanismos de procesamiento independientes para las cargas diarias y los eventos de comportamiento digital.
+**Decisión:** implementar dos mecanismos de procesamiento independientes para las cargas diarias y los eventos de comportamiento digital.
 
 
 
-\*\*Implementación:\*\*
+**Implementación:**
 
-\- `job-pede-andina-e4`: procesa las fuentes principales mediante las capas Bronze, Silver y Gold.
+- `job-pede-andina-e4`: procesa las fuentes principales mediante las capas Bronze, Silver y Gold.
 
-\- `job-pede-andina-e4-horario`: procesa clics y logs mediante Auto Loader.
+- `job-pede-andina-e4-horario`: procesa clics y logs mediante Auto Loader.
 
 
 
-\*\*Justificación:\*\*
+**Justificación:**
 
 
 
@@ -46,25 +46,25 @@ Además, Auto Loader permite detectar y procesar archivos nuevos, incluyendo arc
 
 
 
-\## 3. Decisión 2: Uso de Managed Identities para la autenticación
+## 3. Decisión 2: Uso de Managed Identities para la autenticación
 
 
 
-\*\*Decisión:\*\* utilizar identidades administradas para establecer la comunicación entre los servicios de Azure, evitando depender de credenciales personales o secretos incorporados directamente en el código.
+**Decisión:** utilizar identidades administradas para establecer la comunicación entre los servicios de Azure, evitando depender de credenciales personales o secretos incorporados directamente en el código.
 
 
 
-\*\*Implementación:\*\*
+**Implementación:**
 
-\- Azure Data Factory utiliza System Managed Identity.
+- Azure Data Factory utiliza System Managed Identity.
 
-\- Azure Databricks accede al Data Lake mediante un Access Connector con Managed Identity.
+- Azure Databricks accede al Data Lake mediante un Access Connector con Managed Identity.
 
-\- Azure Key Vault centraliza la gestión de secretos necesarios para las conexiones.
+- Azure Key Vault centraliza la gestión de secretos necesarios para las conexiones.
 
 
 
-\*\*Justificación:\*\*
+**Justificación:**
 
 
 
@@ -80,15 +80,15 @@ Los permisos se asignaron de acuerdo con las responsabilidades de cada servicio 
 
 
 
-\## 4. Decisión 3: Uso de Serverless en Databricks
+## 4. Decisión 3: Uso de Serverless en Databricks
 
 
 
-\*\*Decisión:\*\* utilizar cómputo Serverless para ejecutar los Jobs de procesamiento.
+**Decisión:** utilizar cómputo Serverless para ejecutar los Jobs de procesamiento.
 
 
 
-\*\*Implementación:\*\*
+**Implementación:**
 
 
 
@@ -96,7 +96,7 @@ Los Jobs diarios y horarios utilizan Serverless para ejecutar las tareas de los 
 
 
 
-\*\*Justificación:\*\*
+**Justificación:**
 
 
 
@@ -112,49 +112,49 @@ Esta decisión resulta especialmente relevante en un entorno de aprendizaje y de
 
 
 
-\## 5. Decisión 4: Arquitectura de datos Bronze, Silver y Gold
+## 5. Decisión 4: Arquitectura de datos Bronze, Silver y Gold
 
 
 
-\*\*Decisión:\*\* organizar el procesamiento mediante una arquitectura Lakehouse de tres capas.
+**Decisión:** organizar el procesamiento mediante una arquitectura Lakehouse de tres capas.
 
 
 
-\*\*Implementación:\*\*
+**Implementación:**
 
 
 
-\*\*Bronze\*\*
+**Bronze**
 
-\- Recibe los datos provenientes de las fuentes.
+- Recibe los datos provenientes de las fuentes.
 
-\- Conserva la información de las cargas.
+- Conserva la información de las cargas.
 
-\- Permite mantener trazabilidad mediante campos como `\_load\_date`.
-
-
-
-\*\*Silver\*\*
-
-\- Aplica transformaciones y normalizaciones.
-
-\- Integra información procedente de diferentes fuentes.
-
-\- Incorpora controles de calidad sobre los datos.
+- Permite mantener trazabilidad mediante campos como `_load_date`.
 
 
 
-\*\*Gold\*\*
+**Silver**
 
-\- Genera tablas analíticas orientadas a las necesidades del negocio.
+- Aplica transformaciones y normalizaciones.
 
-\- Organiza los resultados para facilitar consultas y análisis.
+- Integra información procedente de diferentes fuentes.
 
-\- Incluye tablas como `ventas\_diarias`, `clientes\_valor`, `embudo\_web` y `conciliacion\_pagos`.
+- Incorpora controles de calidad sobre los datos.
 
 
 
-\*\*Justificación:\*\*
+**Gold**
+
+- Genera tablas analíticas orientadas a las necesidades del negocio.
+
+- Organiza los resultados para facilitar consultas y análisis.
+
+- Incluye tablas como `ventas_diarias`, `clientes_valor`, `embudo_web` y `conciliacion_pagos`.
+
+
+
+**Justificación:**
 
 
 
@@ -170,19 +170,19 @@ Esta arquitectura permite incorporar nuevas transformaciones y necesidades anal�
 
 
 
-\## 6. Decisión 5: Implementación de E2 — Control de calidad de datos
+## 6. Decisión 5: Implementación de E2 — Control de calidad de datos
 
 
 
-\*\*Decisión:\*\* incorporar una validación explícita que detenga el procesamiento cuando se detecten estados HTTP o valores de latencia fuera de los rangos permitidos.
+**Decisión:** incorporar una validación explícita que detenga el procesamiento cuando se detecten estados HTTP o valores de latencia fuera de los rangos permitidos.
 
 
 
-\*\*Implementación:\*\*
+**Implementación:**
 
 
 
-Se modificó el notebook `e4\_02\_plata` mediante la incorporación del parámetro `prueba\_e2`.
+Se modificó el notebook `e4_02_plata` mediante la incorporación del parámetro `prueba_e2`.
 
 
 
@@ -190,9 +190,9 @@ Las reglas implementadas son:
 
 
 
-\- Estado HTTP entre 100 y 599.
+- Estado HTTP entre 100 y 599.
 
-\- Latencia mayor o igual a cero.
+- Latencia mayor o igual a cero.
 
 
 
@@ -204,7 +204,7 @@ La validación utiliza una aserción (`assert`) para detener la ejecución cuand
 
 
 
-\*\*Justificación:\*\*
+**Justificación:**
 
 
 
@@ -212,13 +212,13 @@ La existencia de datos incorrectos no debería pasar inadvertida durante el proc
 
 
 
-\*\*Resultados de las pruebas:\*\*
+**Resultados de las pruebas:**
 
 
 
-1\. Con `prueba\_e2=si`, se introdujo un registro sintético inválido y la tarea Silver terminó con el error esperado.
+1. Con `prueba_e2=si`, se introdujo un registro sintético inválido y la tarea Silver terminó con el error esperado.
 
-2\. Con `prueba\_e2=no`, la tarea terminó correctamente y la tabla `pede\_dev.silver.logs` conservó 146.282 registros.
+2. Con `prueba_e2=no`, la tarea terminó correctamente y la tabla `pede_dev.silver.logs` conservó 146.282 registros.
 
 
 
@@ -226,33 +226,33 @@ La prueba se realizó sobre la tarea Silver del Job, no sobre una ejecución com
 
 
 
-\## 7. Decisión 6: Implementación de E3 — Segunda fecha de carga e idempotencia
+## 7. Decisión 6: Implementación de E3 — Segunda fecha de carga e idempotencia
 
 
 
-\*\*Decisión:\*\* incorporar un mecanismo de carga por fecha que permita repetir una carga sin duplicar los registros correspondientes a esa misma fecha.
+**Decisión:** incorporar un mecanismo de carga por fecha que permita repetir una carga sin duplicar los registros correspondientes a esa misma fecha.
 
 
 
-\*\*Implementación:\*\*
+**Implementación:**
 
 
 
-Se modificó la lógica existente del notebook `e4\_01\_bronce`.
+Se modificó la lógica existente del notebook `e4_01_bronce`.
 
 
 
-El mecanismo utiliza el campo `\_load\_date` y contempla los siguientes pasos:
+El mecanismo utiliza el campo `_load_date` y contempla los siguientes pasos:
 
 
 
-1\. Identificar la fecha de carga.
+1. Identificar la fecha de carga.
 
-2\. Eliminar los registros asociados a esa misma fecha.
+2. Eliminar los registros asociados a esa misma fecha.
 
-3\. Realizar nuevamente la ingesta.
+3. Realizar nuevamente la ingesta.
 
-4\. Conservar los registros correspondientes a otras fechas.
+4. Conservar los registros correspondientes a otras fechas.
 
 
 
@@ -260,19 +260,19 @@ La implementación se aplicó a las cinco tablas provenientes de Azure SQL Datab
 
 
 
-\- customers
+- customers
 
-\- products
+- products
 
-\- orders
+- orders
 
-\- order\_items
+- order_items
 
-\- payments
+- payments
 
 
 
-\*\*Justificación:\*\*
+**Justificación:**
 
 
 
@@ -288,7 +288,7 @@ La estrategia implementada permite volver a procesar una fecha conservando la in
 
 
 
-\*\*Validación:\*\*
+**Validación:**
 
 
 
@@ -296,7 +296,7 @@ Se realizaron cargas para distintas fechas, incluyendo la repetición de una fec
 
 
 
-Se verificaron los conteos por `\_load\_date` para las cinco tablas y se comprobó que los registros de otras fechas se conservaran.
+Se verificaron los conteos por `_load_date` para las cinco tablas y se comprobó que los registros de otras fechas se conservaran.
 
 
 
@@ -304,7 +304,7 @@ La validación se basó en la comparación de conteos de registros, no en una co
 
 
 
-\## 8. Consideraciones finales
+## 8. Consideraciones finales
 
 
 
@@ -324,11 +324,4 @@ Estas decisiones constituyen la base técnica de la plataforma implementada en A
 
 
 
-\---
-
-
-
-\*\*Proyecto final — P.E. Data Engineer\*\*  
-
-\*\*Caso de estudio: Andina Retail\*\*
-
+---
