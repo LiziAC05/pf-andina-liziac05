@@ -274,6 +274,7 @@ Los resultados fueron contrastados con los controles definidos para el caso de e
 ```text
 
 pf-andina-liziac05/
+│
 ├── adf/
 │   ├── datasets-ds_pede_bronze_csv.json
 │   ├── datasets-ds_pede_sql_tabla.json
@@ -285,27 +286,51 @@ pf-andina-liziac05/
 │   ├── pipelines-pl_pede_ingesta.json
 │   ├── tg_pede_andina_0130.json
 │   └── triggers-tg_pede_ingesta_0130.json
+│
 ├── evidencias/
 │   ├── adf/
+│   │   ├── Captura de pantalla 2026-11-21 231510.png
+│   │   ├── Captura de pantalla 2026-11-22 140830.png
+│   │   └── detalle_copia_sql_adls.png
+│   │
 │   ├── arquitectura/
+│   │   └── andina_arqui.jpg
+│   │
 │   ├── costos/
-│   └── databricks/
-        ├── ejecucion_job_andina.png
-        ├── tablas_gold.png
-        ├── ventas_diarias.png
-        ├── productos_rotacion.png
-        └── clientes_valor.png
+│   │   ├── costos_general.png
+│   │   └── costos_recursos.png
+│   │
+│   ├── databricks/
+│   │   ├── Captura de pantalla 2026-11-21 225310.png
+│   │   ├── Captura de pantalla 2026-11-22 152827.png
+│   │   ├── Captura de pantalla 2026-11-22 153158.png
+│   │   ├── Captura de pantalla 2026-11-22 153545.png
+│   │   ├── ejecucion_job_andina.png
+│   │   ├── tablas_gold.png
+│   │   ├── ventas_diarias.png
+│   │   ├── productos_rotacion.png
+│   │   └── clientes_valor.png
+│   │
 │   ├── e2/
-│   └── e3/
+│   │   ├── Captura de pantalla 2026-11-22 191124.png
+│   │   ├── prueba_exitosa.png
+│   │   └── prueba_fallida.png
+│   │
+│   ├── e3/
+│   │   ├── cambio_parametro.png
+│   │   └── ejecucion_bronce.png
+│   │
+│   └── hoja_contacto.jpg
+│
 ├── notebooks/
 │   ├── e4_00_clics_logs_horario.py
 │   ├── e4_01_bronce.py
 │   ├── e4_02_plata.py
 │   └── e4_03_oro.py
-├── README.md
+│
 ├── DECISIONES.md
+├── README.md
 └── evidencia.md
-
 
 ```
 
