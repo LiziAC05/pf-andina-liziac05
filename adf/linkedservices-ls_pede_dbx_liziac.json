@@ -1,0 +1,17 @@
+{
+  "name": "ls_pede_dbx_liziac",
+  "properties": {
+    "annotations": [
+      "pf-andina",
+      "etapa4",
+      "computo"
+    ],
+    "description": "Conexión ADF con Databricks mediante identidad administrada",
+    "type": "AzureDatabricks",
+    "typeProperties": {
+      "authentication": "MSI",
+      "domain": "https://adb-7405610485690285.5.azuredatabricks.net",
+      "workspaceResourceId": "/subscriptions/c160d356-614e-4076-ae1f-b0dfd9de469c/resourceGroups/rg-pede-liziac05-dev-cus-001/providers/Microsoft.Databricks/workspaces/dbw-pede-liziac05-dev-cus-001"
+    }
+  }
+}

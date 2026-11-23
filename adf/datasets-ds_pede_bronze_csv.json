@@ -1,0 +1,38 @@
+{
+  "name": "ds_pede_bronze_csv",
+  "properties": {
+    "annotations": [],
+    "linkedServiceName": {
+      "referenceName": "ls_pede_lake_liziac",
+      "type": "LinkedServiceReference"
+    },
+    "parameters": {
+      "fecha": {
+        "type": "string"
+      },
+      "nombre_tabla": {
+        "type": "string"
+      }
+    },
+    "schema": [],
+    "type": "DelimitedText",
+    "typeProperties": {
+      "columnDelimiter": ",",
+      "escapeChar": "\\",
+      "firstRowAsHeader": true,
+      "location": {
+        "fileName": {
+          "type": "Expression",
+          "value": "@concat(dataset().nombre_tabla,'.csv')"
+        },
+        "fileSystem": "bronze",
+        "folderPath": {
+          "type": "Expression",
+          "value": "@concat('pedidos/fecha_carga=',dataset().fecha)"
+        },
+        "type": "AzureBlobFSLocation"
+      },
+      "quoteChar": "\""
+    }
+  }
+}

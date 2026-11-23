@@ -1,0 +1,26 @@
+{
+  "name": "ls_pede_sql_liziac",
+  "properties": {
+    "annotations": [],
+    "type": "AzureSqlDatabase",
+    "typeProperties": {
+      "alwaysEncryptedSettings": {
+        "alwaysEncryptedAkvAuthType": "ManagedIdentity"
+      },
+      "authenticationType": "SQL",
+      "database": "sqldb-andina-ventas-dev",
+      "encrypt": "mandatory",
+      "password": {
+        "secretName": "sqladmin-password",
+        "store": {
+          "referenceName": "ls_pede_kv_liziac",
+          "type": "LinkedServiceReference"
+        },
+        "type": "AzureKeyVaultSecret"
+      },
+      "server": "sql-pede-liziac05-dev-cus-001.database.windows.net",
+      "trustServerCertificate": false,
+      "userName": "CloudSAf644d7c9"
+    }
+  }
+}

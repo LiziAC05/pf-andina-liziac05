@@ -1,0 +1,11 @@
+{
+  "name": "ls_pede_kv_liziac",
+  "properties": {
+    "annotations": [],
+    "description": "Conexión a Azure Key Vault para gestionar credenciales",
+    "type": "AzureKeyVault",
+    "typeProperties": {
+      "baseUrl": "https://kv-pede-liziac05-dev-001.vault.azure.net/"
+    }
+  }
+}

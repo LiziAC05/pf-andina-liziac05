@@ -1,0 +1,24 @@
+{
+  "name": "ds_pede_sql_tabla",
+  "properties": {
+    "annotations": [],
+    "linkedServiceName": {
+      "referenceName": "ls_pede_sql_liziac",
+      "type": "LinkedServiceReference"
+    },
+    "parameters": {
+      "tableName": {
+        "type": "string"
+      }
+    },
+    "schema": [],
+    "type": "AzureSqlTable",
+    "typeProperties": {
+      "schema": "dbo",
+      "table": {
+        "type": "Expression",
+        "value": "@dataset().tableName"
+      }
+    }
+  }
+}

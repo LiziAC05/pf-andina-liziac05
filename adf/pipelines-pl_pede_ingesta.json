@@ -1,0 +1,178 @@
+{
+  "name": "pl_pede_ingesta",
+  "properties": {
+    "activities": [
+      {
+        "dependsOn": [],
+        "name": "lk_tablas",
+        "policy": {
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false,
+          "timeout": "0.12:00:00"
+        },
+        "type": "Lookup",
+        "typeProperties": {
+          "dataset": {
+            "parameters": {
+              "tableName": "customers"
+            },
+            "referenceName": "ds_pede_sql_tabla",
+            "type": "DatasetReference"
+          },
+          "firstRowOnly": false,
+          "source": {
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "sqlReaderQuery": "SELECT TABLE_NAME AS nombre\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_TYPE = 'BASE TABLE'\nAND TABLE_NAME IN (\n    'customers',\n    'products',\n    'orders',\n    'order_items',\n    'payments'\n)",
+            "type": "AzureSqlSource"
+          }
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "lk_tablas",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "name": "fe_tablas",
+        "type": "ForEach",
+        "typeProperties": {
+          "activities": [
+            {
+              "dependsOn": [],
+              "inputs": [
+                {
+                  "parameters": {
+                    "tableName": {
+                      "type": "Expression",
+                      "value": "@item().nombre"
+                    }
+                  },
+                  "referenceName": "ds_pede_sql_tabla",
+                  "type": "DatasetReference"
+                }
+              ],
+              "name": "cp_tabla",
+              "outputs": [
+                {
+                  "parameters": {
+                    "fecha": {
+                      "type": "Expression",
+                      "value": "@pipeline().parameters.fecha"
+                    },
+                    "nombre_tabla": {
+                      "type": "Expression",
+                      "value": "@item().nombre"
+                    }
+                  },
+                  "referenceName": "ds_pede_bronze_csv",
+                  "type": "DatasetReference"
+                }
+              ],
+              "policy": {
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false,
+                "timeout": "0.12:00:00"
+              },
+              "type": "Copy",
+              "typeProperties": {
+                "enableStaging": false,
+                "sink": {
+                  "formatSettings": {
+                    "fileExtension": ".txt",
+                    "quoteAllText": true,
+                    "type": "DelimitedTextWriteSettings"
+                  },
+                  "storeSettings": {
+                    "type": "AzureBlobFSWriteSettings"
+                  },
+                  "type": "DelimitedTextSink"
+                },
+                "source": {
+                  "partitionOption": "None",
+                  "queryTimeout": "02:00:00",
+                  "type": "AzureSqlSource"
+                },
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                }
+              },
+              "userProperties": [
+                {
+                  "name": "tabla",
+                  "value": "@item().nombre"
+                },
+                {
+                  "name": "fecha",
+                  "value": "@pipeline().parameters.fecha"
+                },
+                {
+                  "name": "destino",
+                  "value": "@concat('bronze/pedidos/fecha_carga=',pipeline().parameters.fecha,'/',item().nombre,'.csv')"
+                }
+              ]
+            },
+            {
+              "dependsOn": [
+                {
+                  "activity": "cp_tabla",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ],
+              "name": "av_tabla",
+              "type": "AppendVariable",
+              "typeProperties": {
+                "value": {
+                  "type": "Expression",
+                  "value": "@item().nombre"
+                },
+                "variableName": "v_tablas"
+              },
+              "userProperties": []
+            }
+          ],
+          "batchCount": 5,
+          "items": {
+            "type": "Expression",
+            "value": "@activity('lk_tablas').output.value"
+          }
+        },
+        "userProperties": []
+      }
+    ],
+    "annotations": [],
+    "lastPublishTime": "2026-11-22T04:10:28Z",
+    "parameters": {
+      "fecha": {
+        "defaultValue": "2026-11-18",
+        "type": "string"
+      }
+    },
+    "policy": {
+      "elapsedTimeMetric": {}
+    },
+    "variables": {
+      "av_tabla": {
+        "type": "Array"
+      },
+      "v_tablas": {
+        "type": "Array"
+      }
+    }
+  }
+}

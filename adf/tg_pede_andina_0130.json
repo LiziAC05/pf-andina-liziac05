@@ -1,0 +1,25 @@
+{
+  "annotations": [],
+  "description": "Ejecución diaria del pipeline maestro Andina Retail",
+  "pipelines": [
+    {
+      "parameters": {
+        "fecha": "@formatDateTime(convertTimeZone(trigger().scheduledTime,'UTC','SA Pacific Standard Time'),'yyyy-MM-dd')"
+      },
+      "pipelineReference": {
+        "referenceName": "pl_pede_andina_diario",
+        "type": "PipelineReference"
+      }
+    }
+  ],
+  "type": "ScheduleTrigger",
+  "typeProperties": {
+    "recurrence": {
+      "frequency": "Day",
+      "interval": 1,
+      "schedule": {},
+      "startTime": "2026-11-23T01:30:00",
+      "timeZone": "SA Pacific Standard Time"
+    }
+  }
+}

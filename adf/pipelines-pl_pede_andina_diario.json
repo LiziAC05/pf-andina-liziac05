@@ -1,0 +1,130 @@
+{
+  "name": "pl_pede_andina_diario",
+  "properties": {
+    "activities": [
+      {
+        "dependsOn": [],
+        "name": "sv_fecha",
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "type": "SetVariable",
+        "typeProperties": {
+          "value": {
+            "type": "Expression",
+            "value": "@if(empty(pipeline().parameters.fecha),formatDateTime(convertTimeZone(utcNow(),'UTC','SA Pacific Standard Time'),'yyyy-MM-dd'),pipeline().parameters.fecha)"
+          },
+          "variableName": "v_fecha"
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "sv_fecha",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "name": "ep_ingesta",
+        "policy": {
+          "secureInput": false
+        },
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "parameters": {
+            "fecha": {
+              "type": "Expression",
+              "value": "@variables('v_fecha')"
+            }
+          },
+          "pipeline": {
+            "referenceName": "pl_pede_ingesta",
+            "type": "PipelineReference"
+          },
+          "waitOnCompletion": true
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "ep_ingesta",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "linkedServiceName": {
+          "referenceName": "ls_pede_dbx_liziac",
+          "type": "LinkedServiceReference"
+        },
+        "name": "job_andina",
+        "policy": {
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false,
+          "timeout": "0.01:00:00"
+        },
+        "type": "DatabricksJob",
+        "typeProperties": {
+          "jobId": "18143536534011",
+          "jobParameters": {
+            "catalog": "pede_dev",
+            "fecha": {
+              "type": "Expression",
+              "value": "@variables('v_fecha')"
+            },
+            "storage_account": "stpedeliziac05ldevcus001"
+          }
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "job_andina",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "name": "sv_resultado",
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "type": "SetVariable",
+        "typeProperties": {
+          "value": {
+            "type": "Expression",
+            "value": "@concat('Andina ', variables('v_fecha'), ' procesada. Run de Databricks: ', activity('job_andina').output.runPageUrl)"
+          },
+          "variableName": "v_resultado"
+        },
+        "userProperties": []
+      }
+    ],
+    "annotations": [],
+    "lastPublishTime": "2026-11-22T18:04:35Z",
+    "parameters": {
+      "fecha": {
+        "defaultValue": "",
+        "type": "String"
+      }
+    },
+    "variables": {
+      "v_fecha": {
+        "defaultValue": "2026-11-18",
+        "type": "String"
+      },
+      "v_resultado": {
+        "defaultValue": "",
+        "type": "String"
+      }
+    }
+  }
+}

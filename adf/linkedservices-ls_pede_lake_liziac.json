@@ -1,0 +1,11 @@
+{
+  "name": "ls_pede_lake_liziac",
+  "properties": {
+    "annotations": [],
+    "description": "Conexión al Data Lake Gen2 de Andina Retail",
+    "type": "AzureBlobFS",
+    "typeProperties": {
+      "url": "https://stpedeliziac05ldevcus001.dfs.core.windows.net/"
+    }
+  }
+}
