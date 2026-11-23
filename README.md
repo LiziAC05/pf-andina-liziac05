@@ -289,7 +289,12 @@ pf-andina-liziac05/
 │   ├── adf/
 │   ├── arquitectura/
 │   ├── costos/
-│   ├── databricks/
+│   └── databricks/
+        ├── ejecucion_job_andina.png
+        ├── tablas_gold.png
+        ├── ventas_diarias.png
+        ├── productos_rotacion.png
+        └── clientes_valor.png
 │   ├── e2/
 │   └── e3/
 ├── notebooks/
