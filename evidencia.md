@@ -105,6 +105,7 @@ La validación de conteos por fecha se realizó mediante consultas en Databricks
 | `evidencias/costos/costos_general.png` | Vista general del análisis de costos de Azure. |
 | `evidencias/costos/costos_recursos.png` | Desglose de costos por recursos. |
 
+Durante el 22 de noviembre de 2026, Azure Databricks representó el principal componente del costo de la plataforma, con un consumo acumulado de USD 8.36 sobre un total de USD 8.60. Esto evidencia que el procesamiento y la ejecución de cargas de datos fueron los componentes con mayor impacto económico durante el desarrollo del proyecto.
 
 
 ## 7. Consideraciones
