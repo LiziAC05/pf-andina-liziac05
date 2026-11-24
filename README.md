@@ -140,30 +140,42 @@ La solución implementa tres capas de procesamiento:
 
 Consulta las [evidencias de Azure Data Factory](evidencia.md#2-azure-data-factory).
 
-El pipeline maestro `pl_pede_andina_diario` coordina la ingesta y el procesamiento de datos mediante Databricks.
+El pipeline maestro `pl_pede_andina_diario` coordina el flujo de ingesta y procesamiento de datos. Para ello, invoca el pipeline `pl_pede_ingesta` y posteriormente gestiona la ejecución del procesamiento mediante Azure Databricks.
 
+El pipeline utiliza el parámetro fecha para gestionar la fecha de procesamiento.
 
+La configuración de Azure Data Factory contempla los siguientes componentes:
 
-El pipeline utiliza el parámetro `fecha` para gestionar la fecha de procesamiento.
+**Linked Services:**
 
+- `ls_pede_sql_liziac`: conexión con Azure SQL Database.
 
+- `ls_pede_lake_liziac`: conexión con Azure Data Lake Storage Gen2.
+
+- `ls_pede_dbx_liziac`: conexión con Azure Databricks.
+
+- `ls_pede_kv_liziac`: conexión con Azure Key Vault.
+
+**Datasets:**
+
+- `ds_pede_sql_tabla`: referencia a las tablas de Azure SQL Database.
+
+- `ds_pede_bronze_csv`: referencia a los archivos CSV de la capa Bronze.
+
+El Linked Service de SQL utiliza los parámetros servidor y base para definir dinámicamente la conexión a la base de datos.
 
 El desencadenador `tg_pede_andina_0130` está configurado para ejecutarse diariamente a la 01:30, hora de Lima. Se encuentra publicado, pero permanece detenido.
+
+Las definiciones de los componentes de Azure Data Factory fueron exportadas en formato JSON y versionadas en el repositorio.
 
 
 
 ### Azure Databricks
 
-
-
 Se implementaron los siguientes Jobs:
 
-
-
 - `job-pede-andina-e4`: procesamiento diario de las capas Bronze, Silver y Gold.
-
 - `job-pede-andina-e4-horario`: procesamiento de clics y logs mediante Auto Loader, incluyendo la detección de archivos nuevos y tardíos.
-
 
 El Job horario `job-pede-andina-e4-horario` se encuentra configurado, pero permanece en pausa.
 
@@ -237,7 +249,7 @@ La prueba se realizó sobre las cinco tablas SQL: customers, products, orders, o
 
 
 
-Se verificaron los conteos de registros para distintas fechas, incluyendo la repetición de una fecha previamente cargada.
+Se verificaron los conteos de registros para distintas fechas, incluyendo la repetición de una fecha previamente cargada. La validación se realizó a nivel de conteo de registros, comprobando que la repetición de la carga no alterara los registros correspondientes a fechas anteriores.
 
 
 La repetición de la carga se verificó para la fecha 2026-11-22, comprobando la consistencia de los conteos y la conservación de los registros de fechas anteriores.
@@ -342,18 +354,13 @@ La carpeta `adf/` contiene las definiciones JSON exportadas de Azure Data Factor
 
 ## 10. Seguridad
 
-
-
 La solución utiliza identidades administradas para la comunicación entre servicios de Azure cuando corresponde.
 
-
-
 - Azure Data Factory utiliza System Managed Identity.
-
 - Databricks accede al Data Lake mediante un Access Connector y Managed Identity.
-
-- Azure Key Vault permite gestionar los secretos.
-
+- Azure Key Vault permite gestionar los secretos utilizados por los servicios.
+- El Linked Service de SQL obtiene la contraseña mediante una referencia al secreto `sqladmin-password` almacenado en Azure Key Vault.
+- El repositorio conserva las referencias a los secretos, pero no sus valores.
 - No se deben incluir contraseñas, tokens ni claves de almacenamiento en el repositorio.
 
 
@@ -369,6 +376,4 @@ La solución utiliza identidades administradas para la comunicación entre servi
 
 
 ---
-
-\*\*Plataforma: Microsoft Azure y Azure Databricks\*\*
 
