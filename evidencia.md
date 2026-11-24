@@ -25,7 +25,7 @@ Este documento organiza las evidencias de implementaci처n, ejecuci처n, validaci�
 | `evidencias/adf/Captura de pantalla 2026-11-21 231510.png` | Ejecuci처n de las actividades del pipeline de ingesta. |
 | `evidencias/adf/Captura de pantalla 2026-11-22 140830.png` | Ejecuci처n exitosa del pipeline maestro `pl_pede_andina_diario`. |
 | `evidencias/adf/detalle_copia_sql_adls.png` | Detalle de transferencia de datos desde Azure SQL Database hacia ADLS Gen2. |
-
+| `evidencias/adf/ejecucion_pipeline_maestro_2026-11-24.png` | Ejecuci처n exitosa del pipeline maestro `pl_pede_andina_diario` el 24 de noviembre |
 
 
 La ejecuci처n del pipeline maestro muestra la finalizaci처n satisfactoria de las actividades `sv_fecha`, `ep_ingesta`, `job_andina` y `sv_resultado`.
