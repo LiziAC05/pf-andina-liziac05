@@ -1,14 +1,26 @@
 {
   "name": "ls_pede_sql_liziac",
   "properties": {
-    "annotations": [],
+    "annotations": [
+      "proyecto:PF-Andina-Retail"
+    ],
+    "parameters": {
+      "base": {
+        "defaultValue": "sqldb-andina-ventas-dev",
+        "type": "string"
+      },
+      "servidor": {
+        "defaultValue": "sql-pede-liziac05-dev-cus-001.database.windows.net",
+        "type": "string"
+      }
+    },
     "type": "AzureSqlDatabase",
     "typeProperties": {
       "alwaysEncryptedSettings": {
         "alwaysEncryptedAkvAuthType": "ManagedIdentity"
       },
       "authenticationType": "SQL",
-      "database": "sqldb-andina-ventas-dev",
+      "database": "@{linkedService().base}",
       "encrypt": "mandatory",
       "password": {
         "secretName": "sqladmin-password",
@@ -18,7 +30,7 @@
         },
         "type": "AzureKeyVaultSecret"
       },
-      "server": "sql-pede-liziac05-dev-cus-001.database.windows.net",
+      "server": "@{linkedService().servidor}",
       "trustServerCertificate": false,
       "userName": "CloudSAf644d7c9"
     }

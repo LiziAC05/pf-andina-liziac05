@@ -1,8 +1,14 @@
 {
   "name": "ds_pede_sql_tabla",
   "properties": {
-    "annotations": [],
+    "annotations": [
+      "proyecto:PF-Andina-Retail"
+    ],
     "linkedServiceName": {
+      "parameters": {
+        "base": "sqldb-andina-ventas-dev",
+        "servidor": "sql-pede-liziac05-dev-cus-001.database.windows.net"
+      },
       "referenceName": "ls_pede_sql_liziac",
       "type": "LinkedServiceReference"
     },

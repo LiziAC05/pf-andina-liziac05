@@ -1,7 +1,9 @@
 {
   "name": "ds_pede_bronze_csv",
   "properties": {
-    "annotations": [],
+    "annotations": [
+      "proyecto:PF-Andina-Retail"
+    ],
     "linkedServiceName": {
       "referenceName": "ls_pede_lake_liziac",
       "type": "LinkedServiceReference"

@@ -155,8 +155,10 @@
         "userProperties": []
       }
     ],
-    "annotations": [],
-    "lastPublishTime": "2026-11-22T04:10:28Z",
+    "annotations": [
+      "proyecto:PF-Andina-Retail"
+    ],
+    "lastPublishTime": "2026-11-24T02:31:22Z",
     "parameters": {
       "fecha": {
         "defaultValue": "2026-11-18",

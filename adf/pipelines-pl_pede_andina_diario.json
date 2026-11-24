@@ -108,13 +108,17 @@
         "userProperties": []
       }
     ],
-    "annotations": [],
-    "lastPublishTime": "2026-11-22T18:04:35Z",
+    "annotations": [
+      "proyecto:PF-Andina-Retail"
+    ],
+    "lastPublishTime": "2026-11-24T02:31:22Z",
     "parameters": {
       "fecha": {
-        "defaultValue": "",
         "type": "String"
       }
+    },
+    "policy": {
+      "elapsedTimeMetric": {}
     },
     "variables": {
       "v_fecha": {
@@ -122,7 +126,6 @@
         "type": "String"
       },
       "v_resultado": {
-        "defaultValue": "",
         "type": "String"
       }
     }
