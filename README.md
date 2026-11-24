@@ -142,7 +142,7 @@ Consulta las [evidencias de Azure Data Factory](evidencia.md#2-azure-data-factor
 
 El pipeline maestro `pl_pede_andina_diario` coordina el flujo de ingesta y procesamiento de datos. Para ello, invoca el pipeline `pl_pede_ingesta` y posteriormente gestiona la ejecución del procesamiento mediante Azure Databricks.
 
-El pipeline utiliza el parámetro fecha para gestionar la fecha de procesamiento.
+El pipeline utiliza el parámetro `fecha` para gestionar la fecha de procesamiento.
 
 La configuración de Azure Data Factory contempla los siguientes componentes:
 
@@ -162,7 +162,7 @@ La configuración de Azure Data Factory contempla los siguientes componentes:
 
 - `ds_pede_bronze_csv`: referencia a los archivos CSV de la capa Bronze.
 
-El Linked Service de SQL utiliza los parámetros servidor y base para definir dinámicamente la conexión a la base de datos.
+El Linked Service de SQL utiliza los parámetros `servidor` y `base` para definir dinámicamente la conexión a la base de datos.
 
 El desencadenador `tg_pede_andina_0130` está configurado para ejecutarse diariamente a la 01:30, hora de Lima. Se encuentra publicado, pero permanece detenido.
 
@@ -249,10 +249,7 @@ La prueba se realizó sobre las cinco tablas SQL: customers, products, orders, o
 
 
 
-Se verificaron los conteos de registros para distintas fechas, incluyendo la repetición de una fecha previamente cargada. La validación se realizó a nivel de conteo de registros, comprobando que la repetición de la carga no alterara los registros correspondientes a fechas anteriores.
-
-
-La repetición de la carga se verificó para la fecha 2026-11-22, comprobando la consistencia de los conteos y la conservación de los registros de fechas anteriores.
+Se verificaron los conteos de registros para distintas fechas, incluyendo la repetición de una fecha previamente cargada (2026-11-22), comprobando la consistencia de los conteos y la conservación de los registros de fechas anteriores.
 
 
 ## 8. Resultados y controles de calidad
@@ -303,7 +300,8 @@ pf-andina-liziac05/
 │   ├── adf/
 │   │   ├── Captura de pantalla 2026-11-21 231510.png
 │   │   ├── Captura de pantalla 2026-11-22 140830.png
-│   │   └── detalle_copia_sql_adls.png
+│   │   ├── detalle_copia_sql_adls.png
+|   |   └── ejecucion_pipeline_maestro_2026-11-24.png
 │   │
 │   ├── arquitectura/
 │   │   └── andina_arqui.jpg
